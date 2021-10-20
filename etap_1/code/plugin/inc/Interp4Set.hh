@@ -6,9 +6,9 @@
 # pragma implementation
 #endif
 
-#include "Interp4Command.hh"
+#include <string>
 
-#define DIMENSIONS 3
+#include "Interp4Command.hh"
 
 /*!
  * \file
@@ -23,11 +23,7 @@
  *  Klasa modeluje ...
  */
 class Interp4Set: public Interp4Command {
-	/*
-	*  Tu należy zdefiniować pola, które są niezbędne
-	*  do przechowywania wartości parametrów danego polecenia.
-	*  Ponieżej zdefiniowane jest tylko jedno pole jako przykład.
-	*/
+	std::string _name;
 	double _coord_x, _coord_y;
 	double _angle_ox, _angle_oy, _angle_oz;
 

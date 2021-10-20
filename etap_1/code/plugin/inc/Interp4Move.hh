@@ -6,6 +6,8 @@
 # pragma implementation
 #endif
 
+#include <string>
+
 #include "Interp4Command.hh"
 
 /*!
@@ -21,15 +23,22 @@
  *  Klasa modeluje ...
  */
 class Interp4Move: public Interp4Command {
-	/*
-	*  Tu należy zdefiniować pola, które są niezbędne
-	*  do przechowywania wartości parametrów danego polecenia.
-	*  Ponieżej zdefiniowane jest tylko jedno pole jako przykład.
-	*/
-	double  _Speed_mmS;
+	/*!
+	 * \brief Nazwa obiektu.
+	 */
+	std::string _name;
+	/*!
+	 * \brief Szybkość obiektu.
+	 */
+	double  _speed;
+	/*!
+	 * \brief Długość drogi, którą ma pokonać obiekt.
+	 */
+	double  _distance;
+
 	public:
 	/*!
-	* \brief
+	* \brief Konstruktor klasy Move.
 	*/
 	Interp4Move();  
 	/*!
@@ -58,8 +67,7 @@ class Interp4Move: public Interp4Command {
 	virtual void PrintParams() {}
 	/*!
 	* \brief
-	*
-	*  Ta metoda nie musi być zdefiniowna w klasie bazowej.
+	* Ta metoda nie musi być zdefiniowna w klasie bazowej.
 	*/
 	static Interp4Command* CreateCmd();
 };

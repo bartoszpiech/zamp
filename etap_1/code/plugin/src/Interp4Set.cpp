@@ -22,7 +22,7 @@ Interp4Command* CreateCmd(void) {
 /*!
  *
  */
-Interp4Set::Interp4Set():	_coord_x(0), _coord_y(0),
+Interp4Set::Interp4Set():	_name("unnamed"), _coord_x(0), _coord_y(0),
 							_angle_ox(0), _angle_oy(0), _angle_oz(0)
 {}
 
@@ -30,12 +30,9 @@ Interp4Set::Interp4Set():	_coord_x(0), _coord_y(0),
  *
  */
 void Interp4Set::PrintCmd() const {
-	/*
-	 * Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
-	*/
-	cout << GetCmdName() << " Obj_A "
-		<< _coord_x << ' ' << _coord_y
-		<< ' ' << _angle_ox << ' ' << _angle_oy << ' ' << _angle_oz << endl;
+	cout << GetCmdName() << ' ' << _name << ' '
+		<< _coord_x << ' ' << _coord_y << ' '
+		<< _angle_ox << ' ' << _angle_oy << ' ' << _angle_oz << endl;
 }
 
 /*!
