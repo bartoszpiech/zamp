@@ -53,10 +53,8 @@ bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const {
  *
  */
 bool Interp4Move::ReadParams(std::istream& Strm_CmdsList) {
-	/*
-	*  Tu trzeba napisać odpowiedni kod.
-	*/
-	return true;
+	Strm_CmdsList >> _name >> _speed >> _distance;
+	return !Strm_CmdsList.fail();
 }
 
 /*!

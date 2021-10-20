@@ -25,7 +25,7 @@ LDFLAGS=-Wall
 interp: obj/main.o
 	g++ ${LDFLAGS} -o interp  obj/main.o -ldl
 
-obj/main.o: src/main.cpp inc/Interp4Command.hh
+obj/main.o: src/main.cpp inc/Interp4Command.hh inc/LibInterface.hh
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
 
 clean:
