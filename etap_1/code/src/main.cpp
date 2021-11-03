@@ -13,6 +13,10 @@ using namespace std;
 
 #define LINE_SIZE 500
 
+/*
+ * \brief Funkcja wykonująca czynności preprocesora (usuwa komentarze, zamienia
+ * #define na konkretne wartości).
+ */
 bool ExecPreprocessor(const char *fileName, istringstream &iStrm4Cmds) {
 	string cmd4Preproc = "cpp -P ";
 	char line[LINE_SIZE];
@@ -37,26 +41,34 @@ int main(int argc, char **argv) {
 			cerr << "!!! Wywolanie preprocesora sie nie powiodlo" << endl;
 			return 1;
 		}
-		cout << stream.str();
+		//cout << stream.str();
 		Set4LibInterfaces interfaces;
-		interfaces.addInterface("libInterp4Set.so");
-		interfaces.addInterface("libInterp4Move.so");
 		interfaces.addInterface("libInterp4Rotate.so");
 		interfaces.addInterface("libInterp4Pause.so");
+		interfaces.addInterface("libInterp4Set.so");
+		interfaces.addInterface("libInterp4Move.so");
 
-		std::string cmd_name, obj;
+		std::string cmd_name;
 		while (stream >> cmd_name) {
-			stream >> obj;
-			auto cmd = interfaces.map[cmd_name]->pCreateCmd();
-			if (!cmd->ReadParams(stream)) {
+			if (interfaces.map.find(cmd_name) == interfaces.map.end()) {
+				cerr << "Nie znaleziono komendy: " << cmd_name << endl;
+				break;
+			}
+			Interp4Command *pcmd = interfaces.map[cmd_name]->pCreateCmd();
+			if (!pcmd->ReadParams(stream)) {
 				cerr << "Wczytywanie parametrow nie powiodlo sie" << endl;
 			}
-			cmd->PrintCmd();
+			pcmd->PrintCmd();
 		}
 	}
 
 
-	/* TEST 
+	/* TEST
+	Set4LibInterfaces interfaces;
+	interfaces.addInterface("libInterp4Set.so");
+	interfaces.addInterface("libInterp4Move.so");
+	interfaces.addInterface("libInterp4Rotate.so");
+	interfaces.addInterface("libInterp4Pause.so");
 	Interp4Command *pCmd_Move = interfaces.map["Move"]->pCreateCmd();
 	Interp4Command *pCmd_Set = interfaces.map["Set"]->pCreateCmd();
 	Interp4Command *pCmd_Rotate = interfaces.map["Rotate"]->pCreateCmd();

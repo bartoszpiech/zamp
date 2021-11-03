@@ -56,10 +56,9 @@ bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const {
  *
  */
 bool Interp4Set::ReadParams(std::istream& Strm_CmdsList) {
-	/*
-	*  Tu trzeba napisać odpowiedni kod.
-	*/
-	return true;
+	Strm_CmdsList >> _name >> _coord_x >> _coord_y >> _angle_ox >> _angle_oy
+		>> _angle_oz;
+	return !Strm_CmdsList.fail();
 }
 
 /*!

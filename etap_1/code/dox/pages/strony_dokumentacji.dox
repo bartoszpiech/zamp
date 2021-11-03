@@ -11,6 +11,9 @@
   
   \image html diagram_klas__wtyczki.svg "Wstępny diagram klas wtyczek"
 
+  \section diagram_dzialania Diagram czynności pracy interpretera
+  
+  \image html diagram_czynnosci.svg "Pokazuje działanie interpretera krok po kroku"
  */
 
 /*!

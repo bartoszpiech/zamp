@@ -24,10 +24,6 @@
  */
 class Interp4Pause: public Interp4Command {
 	/*!
-	 * \brief Nazwa obiektu.
-	 */
-	std::string _name;
-	/*!
 	 * \brief czas pauzy w ms
 	 */
 	double _time;

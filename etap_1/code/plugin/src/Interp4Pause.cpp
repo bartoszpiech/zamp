@@ -22,14 +22,14 @@ Interp4Command* CreateCmd(void) {
 /*!
  *
  */
-Interp4Pause::Interp4Pause(): _name("unnamed"), _time(0)
+Interp4Pause::Interp4Pause(): _time(0)
 {}
 
 /*!
  *
  */
 void Interp4Pause::PrintCmd() const {
-	cout << GetCmdName() << ' ' << _name << ' ' << _time << endl;
+	cout << GetCmdName() << ' ' << _time << endl;
 }
 
 /*!
@@ -53,7 +53,7 @@ bool Interp4Pause::ExecCmd( MobileObj  *pMobObj,  int  Socket) const {
  *
  */
 bool Interp4Pause::ReadParams(std::istream& Strm_CmdsList) {
-	Strm_CmdsList >> _name >> _time;
+	Strm_CmdsList >> _time;
 	return !Strm_CmdsList.fail();
 }
 

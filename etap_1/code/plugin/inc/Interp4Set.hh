@@ -23,13 +23,22 @@
  *  Klasa modeluje ...
  */
 class Interp4Set: public Interp4Command {
+	/*!
+	* \brief Nazwa obiektu.
+	*/
 	std::string _name;
+	/*!
+	* \brief Współrzędne obiektu w osi OX, OY.
+	*/
 	double _coord_x, _coord_y;
+	/*!
+	* \brief Kąty obrotu o OX, OY, oraz OZ.
+	*/
 	double _angle_ox, _angle_oy, _angle_oz;
 
 public:
 	/*!
-	* \brief
+	* \brief Konstruktor klasy Set.
 	*/
 	Interp4Set();
 	/*!
