@@ -9,6 +9,7 @@ using namespace std;
 #include "MobileObj.hh"
 #include "LibInterface.hh"
 #include "Set4LibInterfaces.hh"
+#include "Vector3D.hh"
 
 
 #define LINE_SIZE 500
@@ -62,6 +63,10 @@ int main(int argc, char **argv) {
 		}
 	}
 
+	Vector3D vec;
+	istringstream txtStream("20 2 4");
+	txtStream >> vec;
+	cout << vec;
 
 	/* TEST
 	Set4LibInterfaces interfaces;

@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Interpreter: Plik źródłowy Interp4Set.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Interpreter
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.17 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','Szukaj');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('Interp4Set_8cpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<div class="title">Interp4Set.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Interp4Set_8cpp.html">Idź do dokumentacji tego pliku.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Interp4Set_8hh.html">Interp4Set.hh</a>&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MobileObj_8hh.html">MobileObj.hh</a>&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">using</span> std::cout;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">using</span> std::endl;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <a class="code" href="classInterp4Command.html">Interp4Command</a>* <a class="code" href="Interp4Set_8cpp.html#a0ab483787498a2b002838d9426437be6">CreateCmd</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="Interp4Set_8cpp.html#a161c2be237a6e239fb12733df42be258">   10</a></span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="Interp4Set_8cpp.html#a161c2be237a6e239fb12733df42be258">GetCmdName</a>() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Set&quot;</span>; }</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;}</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="Interp4Set_8cpp.html#a0ab483787498a2b002838d9426437be6">   18</a></span>&#160;<a class="code" href="classInterp4Command.html">Interp4Command</a>* <a class="code" href="Interp4Set_8cpp.html#a0ab483787498a2b002838d9426437be6">CreateCmd</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classInterp4Set.html#a05535040832e686d3519cd6399f80933">Interp4Set::CreateCmd</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classInterp4Set.html#a1b3de8fc06124f8a37d188e6486e45d3">   25</a></span>&#160;<a class="code" href="classInterp4Set.html#a1b3de8fc06124f8a37d188e6486e45d3">Interp4Set::Interp4Set</a>():       _name(<span class="stringliteral">&quot;unnamed&quot;</span>), _coord_x(0), _coord_y(0),</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                                                        _angle_ox(0), _angle_oy(0), _angle_oz(0)</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classInterp4Set.html#a71cdc0ef89ff18a6f2044536a8d7fead">   32</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classInterp4Set.html#a71cdc0ef89ff18a6f2044536a8d7fead">Interp4Set::PrintCmd</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        cout &lt;&lt; <a class="code" href="classInterp4Set.html#a7e61011caf16bc5bcdae597dc58db324">GetCmdName</a>() &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; <a class="code" href="classInterp4Set.html#a6cc858e75f83c4a8a4961b12b8c74fc1">_name</a> &lt;&lt; <span class="charliteral">&#39; &#39;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                &lt;&lt; <a class="code" href="classInterp4Set.html#a73776d9bbe748a1f1abd24e9685aea4a">_coord_x</a> &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; <a class="code" href="classInterp4Set.html#a8d8a60d340e03ef5e36eae2771e13a01">_coord_y</a> &lt;&lt; <span class="charliteral">&#39; &#39;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                &lt;&lt; <a class="code" href="classInterp4Set.html#a596c54f5358b9d34b5fbaba7e639dc8c">_angle_ox</a> &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; <a class="code" href="classInterp4Set.html#adfc8ca00c02115cb3db4a9ae05dd60b8">_angle_oy</a> &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; <a class="code" href="classInterp4Set.html#ac16736aafdd1d04dd5d06a7068337bf6">_angle_oz</a> &lt;&lt; endl;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classInterp4Set.html#a7e61011caf16bc5bcdae597dc58db324">   41</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classInterp4Set.html#a7e61011caf16bc5bcdae597dc58db324">Interp4Set::GetCmdName</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <a class="code" href="Interp4Set_8cpp.html#a161c2be237a6e239fb12733df42be258">return ::GetCmdName</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classInterp4Set.html#ae8be509d169cb30ca7e1688237b285a8">   48</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classInterp4Set.html#ae8be509d169cb30ca7e1688237b285a8">Interp4Set::ExecCmd</a>( <a class="code" href="classMobileObj.html">MobileObj</a>  *pMobObj,  <span class="keywordtype">int</span>  Socket)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="comment">/*</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">        *  Tu trzeba napisać odpowiedni kod.</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">        */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classInterp4Set.html#a0b6e2f4780dbc9ba081ced14f173e162">   58</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classInterp4Set.html#a0b6e2f4780dbc9ba081ced14f173e162">Interp4Set::ReadParams</a>(std::istream&amp; Strm_CmdsList) {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">/*</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">        *  Tu trzeba napisać odpowiedni kod.</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">        */</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classInterp4Set.html#a05535040832e686d3519cd6399f80933">   68</a></span>&#160;<a class="code" href="classInterp4Command.html">Interp4Command</a>* <a class="code" href="classInterp4Set.html#a05535040832e686d3519cd6399f80933">Interp4Set::CreateCmd</a>() {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classInterp4Set.html#a1b3de8fc06124f8a37d188e6486e45d3">Interp4Set</a>();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classInterp4Set.html#ad321f7b601c444c92a8db50785c6faf2">   75</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classInterp4Set.html#ad321f7b601c444c92a8db50785c6faf2">Interp4Set::PrintSyntax</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;   Set NazwaObiektu WspolrzednaX WspolrzednaY kat_OX[st] kat_OY[st] kat_OZ[st]&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclassInterp4Set_html_ac16736aafdd1d04dd5d06a7068337bf6"><div class="ttname"><a href="classInterp4Set.html#ac16736aafdd1d04dd5d06a7068337bf6">Interp4Set::_angle_oz</a></div><div class="ttdeci">double _angle_oz</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8hh_source.html#l00028">Interp4Set.hh:28</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_a596c54f5358b9d34b5fbaba7e639dc8c"><div class="ttname"><a href="classInterp4Set.html#a596c54f5358b9d34b5fbaba7e639dc8c">Interp4Set::_angle_ox</a></div><div class="ttdeci">double _angle_ox</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8hh_source.html#l00028">Interp4Set.hh:28</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_ad321f7b601c444c92a8db50785c6faf2"><div class="ttname"><a href="classInterp4Set.html#ad321f7b601c444c92a8db50785c6faf2">Interp4Set::PrintSyntax</a></div><div class="ttdeci">virtual void PrintSyntax() const</div><div class="ttdoc">Wyświetla składnię polecenia.</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00075">Interp4Set.cpp:75</a></div></div>
+<div class="ttc" id="aInterp4Set_8cpp_html_a0ab483787498a2b002838d9426437be6"><div class="ttname"><a href="Interp4Set_8cpp.html#a0ab483787498a2b002838d9426437be6">CreateCmd</a></div><div class="ttdeci">Interp4Command * CreateCmd(void)</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00018">Interp4Set.cpp:18</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_adfc8ca00c02115cb3db4a9ae05dd60b8"><div class="ttname"><a href="classInterp4Set.html#adfc8ca00c02115cb3db4a9ae05dd60b8">Interp4Set::_angle_oy</a></div><div class="ttdeci">double _angle_oy</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8hh_source.html#l00028">Interp4Set.hh:28</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_a0b6e2f4780dbc9ba081ced14f173e162"><div class="ttname"><a href="classInterp4Set.html#a0b6e2f4780dbc9ba081ced14f173e162">Interp4Set::ReadParams</a></div><div class="ttdeci">virtual bool ReadParams(std::istream &amp;Strm_CmdsList)</div><div class="ttdoc">Czyta wartości parametrów danego polecenia.</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00058">Interp4Set.cpp:58</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_a1b3de8fc06124f8a37d188e6486e45d3"><div class="ttname"><a href="classInterp4Set.html#a1b3de8fc06124f8a37d188e6486e45d3">Interp4Set::Interp4Set</a></div><div class="ttdeci">Interp4Set()</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00025">Interp4Set.cpp:25</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_a73776d9bbe748a1f1abd24e9685aea4a"><div class="ttname"><a href="classInterp4Set.html#a73776d9bbe748a1f1abd24e9685aea4a">Interp4Set::_coord_x</a></div><div class="ttdeci">double _coord_x</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8hh_source.html#l00027">Interp4Set.hh:27</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_a05535040832e686d3519cd6399f80933"><div class="ttname"><a href="classInterp4Set.html#a05535040832e686d3519cd6399f80933">Interp4Set::CreateCmd</a></div><div class="ttdeci">static Interp4Command * CreateCmd()</div><div class="ttdoc">Ta metoda nie musi być zdefiniowna w klasie bazowej.</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00068">Interp4Set.cpp:68</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_a6cc858e75f83c4a8a4961b12b8c74fc1"><div class="ttname"><a href="classInterp4Set.html#a6cc858e75f83c4a8a4961b12b8c74fc1">Interp4Set::_name</a></div><div class="ttdeci">std::string _name</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8hh_source.html#l00026">Interp4Set.hh:26</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_ae8be509d169cb30ca7e1688237b285a8"><div class="ttname"><a href="classInterp4Set.html#ae8be509d169cb30ca7e1688237b285a8">Interp4Set::ExecCmd</a></div><div class="ttdeci">virtual bool ExecCmd(MobileObj *pMobObj, int Socket) const</div><div class="ttdoc">Wykonuje polecenie oraz wizualizuje jego realizację</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00048">Interp4Set.cpp:48</a></div></div>
+<div class="ttc" id="aclassInterp4Command_html"><div class="ttname"><a href="classInterp4Command.html">Interp4Command</a></div><div class="ttdoc">Modeluje abstrakcyjne polecenie dla robota mobilnego.</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Command_8hh_source.html#l00019">Interp4Command.hh:19</a></div></div>
+<div class="ttc" id="aclassMobileObj_html"><div class="ttname"><a href="classMobileObj.html">MobileObj</a></div><div class="ttdef"><b>Definition:</b> <a href="MobileObj_8hh_source.html#l00025">MobileObj.hh:25</a></div></div>
+<div class="ttc" id="aMobileObj_8hh_html"><div class="ttname"><a href="MobileObj_8hh.html">MobileObj.hh</a></div><div class="ttdoc">Zawiera definicję klasy MobileObj.</div></div>
+<div class="ttc" id="aclassInterp4Set_html_a71cdc0ef89ff18a6f2044536a8d7fead"><div class="ttname"><a href="classInterp4Set.html#a71cdc0ef89ff18a6f2044536a8d7fead">Interp4Set::PrintCmd</a></div><div class="ttdeci">virtual void PrintCmd() const</div><div class="ttdoc">Wyświetla postać bieżącego polecenia (nazwę oraz wartości parametrów)</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00032">Interp4Set.cpp:32</a></div></div>
+<div class="ttc" id="aInterp4Set_8cpp_html_a161c2be237a6e239fb12733df42be258"><div class="ttname"><a href="Interp4Set_8cpp.html#a161c2be237a6e239fb12733df42be258">GetCmdName</a></div><div class="ttdeci">const char * GetCmdName()</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00010">Interp4Set.cpp:10</a></div></div>
+<div class="ttc" id="aclassInterp4Set_html_a7e61011caf16bc5bcdae597dc58db324"><div class="ttname"><a href="classInterp4Set.html#a7e61011caf16bc5bcdae597dc58db324">Interp4Set::GetCmdName</a></div><div class="ttdeci">virtual const char * GetCmdName() const</div><div class="ttdoc">Wyświetla nazwę polecenia.</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8cpp_source.html#l00041">Interp4Set.cpp:41</a></div></div>
+<div class="ttc" id="aInterp4Set_8hh_html"><div class="ttname"><a href="Interp4Set_8hh.html">Interp4Set.hh</a></div><div class="ttdoc">Definicja klasy Interp4Set.</div></div>
+<div class="ttc" id="aclassInterp4Set_html_a8d8a60d340e03ef5e36eae2771e13a01"><div class="ttname"><a href="classInterp4Set.html#a8d8a60d340e03ef5e36eae2771e13a01">Interp4Set::_coord_y</a></div><div class="ttdeci">double _coord_y</div><div class="ttdef"><b>Definition:</b> <a href="Interp4Set_8hh_source.html#l00027">Interp4Set.hh:27</a></div></div>
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_b4c3aec6cd8f28418150dce663061cfa.html">plugin</a></li><li class="navelem"><a class="el" href="dir_e5c39bd51a803044aa486678acd3aea1.html">src</a></li><li class="navelem"><a class="el" href="Interp4Set_8cpp.html">Interp4Set.cpp</a></li>
+    <li class="footer">Wygenerowano Śr, 3 lis 2021 11:46:47 dla Interpreter programem
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -432,6 +432,20 @@ std::ostream & operator << ( std::ostream &OStrm, const geom::Vector<Type,Size> 
    return OStrm;
 }
 
+/*!
+ * \brief Wczytuje współrzędne ze strumienia wejściowego do wektora
+ *	Wczytuje współrzędne ze strumienia wejściowego do wektora
+ *  \param IStrm - strumień wejściowy, z którego są wczytywane współrzędne do
+ *  wektora
+ *  \param V - wektor, do którego współrzędne mają zostać zapisane.
+ */
+template<typename Type, unsigned int Size>
+std::istream& operator >> ( std::istream &IStrm, geom::Vector<Type, Size> &V) {
+	for (unsigned int Ind = 0; Ind < Size; ++Ind) {
+		IStrm >> V[Ind];
+	}
+	return rIStrm;
+}
 
 
 #endif
