@@ -444,7 +444,7 @@ std::istream& operator >> ( std::istream &IStrm, geom::Vector<Type, Size> &V) {
 	for (unsigned int Ind = 0; Ind < Size; ++Ind) {
 		IStrm >> V[Ind];
 	}
-	return rIStrm;
+	return IStrm;
 }
 
 

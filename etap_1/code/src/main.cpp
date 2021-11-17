@@ -44,10 +44,10 @@ int main(int argc, char **argv) {
 		}
 		//cout << stream.str();
 		Set4LibInterfaces interfaces;
-		interfaces.addInterface("libInterp4Rotate.so");
-		interfaces.addInterface("libInterp4Pause.so");
-		interfaces.addInterface("libInterp4Set.so");
-		interfaces.addInterface("libInterp4Move.so");
+		interfaces.addInterface("libs/libInterp4Rotate.so");
+		interfaces.addInterface("libs/libInterp4Pause.so");
+		interfaces.addInterface("libs/libInterp4Set.so");
+		interfaces.addInterface("libs/libInterp4Move.so");
 
 		std::string cmd_name;
 		while (stream >> cmd_name) {
@@ -63,10 +63,12 @@ int main(int argc, char **argv) {
 		}
 	}
 
+	/*
 	Vector3D vec;
 	istringstream txtStream("20 2 4");
 	txtStream >> vec;
 	cout << vec;
+	*/
 
 	/* TEST
 	Set4LibInterfaces interfaces;
