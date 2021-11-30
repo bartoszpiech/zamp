@@ -1,12 +1,13 @@
+CPPFLAGS=-Wall -fPIC -pedantic -std=c++17 -iquote inc -iquote ../inc
+LDFLAGS=-Wall -shared
+LIB=../libs
+
 __start__: obj __lines_for_space__ ../libs/libInterp4Move.so ../libs/libInterp4Set.so ../libs/libInterp4Rotate.so ../libs/libInterp4Pause.so
 	@echo "  Tworzenie wtyczki zakonczone."
 	@echo
 
 obj:
 	mkdir obj
-
-CPPFLAGS=-Wall -fPIC -pedantic -std=c++17 -iquote inc -iquote ../inc
-LDFLAGS=-Wall -shared
 
 __lines_for_space__:
 	@echo
