@@ -37,10 +37,6 @@ void XMLInterp4Config::endDocument()
   cout << "=== Koniec przetwarzania dokumentu XML." << endl;
 }
 
-
-
-
-
 /*!
  * Analizuje atrybuty elementu XML \p "Lib" i odpowiednio je interpretuje.
  * \param[in] rAttrs - atrybuty elementu XML \p "Lib".
@@ -88,14 +84,31 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
   *  Sprawdzamy, czy na pewno jest to Name i Value.
   */
 
- char* sName_Name = xercesc::XMLString::transcode(rAttrs.getQName(0));
- char* sName_Scale = xercesc::XMLString::transcode(rAttrs.getQName(1));
- char* sName_RGB = xercesc::XMLString::transcode(rAttrs.getQName(2));
+ /* z pliku config.xsd
+  <xs:complexType name="Type4Cube">
+    <xs:attribute name="Name" type="xs:string"/>
+    <xs:attribute name="Shift" type="xs:string" default="0 0 0"/>
+    <xs:attribute name="Scale" type="xs:string" default="1 1 1"/>
+    <xs:attribute name="RotXYZ_deg" type="xs:string" default="0 0 0"/>
+    <xs:attribute name="Trans_m" type="xs:string" default="0 0 0"/>
+    <xs:attribute name="RGB" type="xs:string" default="128 128 128"/>
+ </xs:complexType>
+ */
 
- XMLSize_t  Index = 0;
+ char* sName_Name = xercesc::XMLString::transcode(rAttrs.getQName(0));
+ char* sName_Shift = xercesc::XMLString::transcode(rAttrs.getQName(1));
+ char* sName_Scale = xercesc::XMLString::transcode(rAttrs.getQName(2));
+ char* sName_RotXYZ_deg = xercesc::XMLString::transcode(rAttrs.getQName(3));
+ char* sName_Trans_m = xercesc::XMLString::transcode(rAttrs.getQName(4));
+ char* sName_RGB = xercesc::XMLString::transcode(rAttrs.getQName(5));
+
+ XMLSize_t Index = 0;
  char* sValue_Name    = xercesc::XMLString::transcode(rAttrs.getValue(Index));
- char* sValue_Scale = xercesc::XMLString::transcode(rAttrs.getValue(1));
- char* sValue_RGB     = xercesc::XMLString::transcode(rAttrs.getValue(2));
+ char* sValue_Shift     = xercesc::XMLString::transcode(rAttrs.getValue(1));
+ char* sValue_Scale = xercesc::XMLString::transcode(rAttrs.getValue(2));
+ char* sValue_RotXYZ_deg    = xercesc::XMLString::transcode(rAttrs.getValue(3));
+ char* sValue_Trans_m = xercesc::XMLString::transcode(rAttrs.getValue(4));
+ char* sValue_RGB     = xercesc::XMLString::transcode(rAttrs.getValue(5));
 
 
  //-----------------------------------------------------------------------------
@@ -103,7 +116,10 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  //
  cout << " Atrybuty:" << endl
       << "     " << sName_Name << " = \"" << sValue_Name << "\"" << endl
+      << "     " << sName_Shift << " = \"" << sValue_Shift << "\"" << endl   
       << "     " << sName_Scale << " = \"" << sValue_Scale << "\"" << endl
+      << "     " << sName_RotXYZ_deg << " = \"" << sValue_RotXYZ_deg << "\"" << endl
+      << "     " << sName_Trans_m << " = \"" << sValue_Trans_m << "\"" << endl
       << "     " << sName_RGB << " = \"" << sValue_RGB << "\"" << endl   
       << endl; 
  //-----------------------------------------------------------------------------
@@ -119,34 +135,87 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  //
  // IStrm >> Scale;
  //
- istringstream   IStrm;
- 
- IStrm.str(sValue_Scale);
- double  Sx,Sy,Sz;
+ istringstream   IStrm_name, IStrm_shift, IStrm_scale, IStrm_rotation;
+istringstream   IStrm_position, IStrm_color;
 
- IStrm >> Sx >> Sy >> Sz;
- if (IStrm.fail()) {
-     cerr << " Blad!!!" << endl;
+ std::string name;
+ Vector3D shift, scale, rotation, position;
+ unsigned int color[3];
+
+ IStrm_name.str(sValue_Name);
+ IStrm_name >> name;
+
+if (IStrm_name.fail()) {
+    cerr << " Blad podczas czytania Name!!!" << endl;
  } else {
-     cout << " Czytanie wartosci OK!!!" << endl;
-     cout << "     " << Sx << "  " << Sy << "  " << Sz << endl;
+     cout << " Czytanie wartosci Name OK!!!" << endl;
+     cout << "     " << name << endl;
  }
 
- // Tu trzeba wstawić odpowiednio własny kod ...
+ IStrm_shift.str(sValue_Shift);
+ IStrm_shift >> shift;
+if (IStrm_shift.fail()) {
+    cerr << " Blad podczas czytania Shift!!!" << endl;
+ } else {
+     cout << " Czytanie wartosci Shift OK!!!" << endl;
+     cout << "     " << shift << endl;
+ }
 
+ IStrm_scale.str(sValue_Scale);
+ IStrm_scale >> scale;
+if (IStrm_scale.fail()) {
+    cerr << " Blad podczas czytania Scale!!!" << endl;
+ } else {
+     cout << " Czytanie wartosci Scale OK!!!" << endl;
+     cout << "     " << scale << endl;
+ }
+
+ IStrm_rotation.str(sValue_RotXYZ_deg);
+ IStrm_rotation >> rotation;
+if (IStrm_rotation.fail()) {
+    cerr << " Blad podczas czytania Rotation!!!" << endl;
+ } else {
+     cout << " Czytanie wartosci Rotation OK!!!" << endl;
+     cout << "     " << rotation << endl;
+ }
+
+ IStrm_position.str(sValue_Trans_m);
+ IStrm_position >> position;
+if (IStrm_position.fail()) {
+    cerr << " Blad podczas czytania Trans!!!" << endl;
+ } else {
+     cout << " Czytanie wartosci Trans OK!!!" << endl;
+     cout << "     " << position << endl;
+ }
+
+ IStrm_color.str(sValue_RGB);
+ IStrm_color >> color[0] >> color[1] >> color[2];
+if (IStrm_color.fail()) {
+    cerr << " Blad podczas czytania RGB!!!" << endl;
+ } else {
+     cout << " Czytanie wartosci RGB OK!!!" << endl;
+     cout << "     " << color[0] << " " << color[1] << " " << color[2] << endl;
+ }
+auto mobileObj = std::make_shared<MobileObj>(name, position, shift, scale,
+        rotation, color);
+
+_rConfig.addMobileObject(name, mobileObj);
+
+// cleanup
  xercesc::XMLString::release(&sName_Name);
+ xercesc::XMLString::release(&sName_Shift);
  xercesc::XMLString::release(&sName_Scale);
+ xercesc::XMLString::release(&sName_RotXYZ_deg);
+ xercesc::XMLString::release(&sName_Trans_m);
  xercesc::XMLString::release(&sName_RGB);
+
  xercesc::XMLString::release(&sValue_Name);
+ xercesc::XMLString::release(&sValue_Shift);
  xercesc::XMLString::release(&sValue_Scale);
+ xercesc::XMLString::release(&sValue_RotXYZ_deg);
+ xercesc::XMLString::release(&sValue_Trans_m);
  xercesc::XMLString::release(&sValue_RGB);
 }
-
-
-
-
-
-
 
 /*!
  * Wykonuje operacje związane z wystąpieniem danego elementu XML.
@@ -169,9 +238,6 @@ void XMLInterp4Config::WhenStartElement( const std::string           &rElemName,
     ProcessCubeAttrs(rAttrs);  return;
   }
 }
-
-
-
 
 /*!
  * Metoda jest wywoływana po napotkaniu nowego elementu XML, np.
@@ -210,9 +276,6 @@ void XMLInterp4Config::startElement(  const   XMLCh* const            pURI,
 
   xercesc::XMLString::release(&sElemName);
 }
-
-
-
 
 /*!
  * Metoda zostaje wywołana w momencie zakończenia danego elementu

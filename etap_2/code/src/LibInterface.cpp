@@ -1,16 +1,16 @@
 #include "LibInterface.hh"
 
 
-bool init(const std::string &pluginPath) {
+bool LibInterface::init(const std::string &pluginPath) {
     void *pFunCreateCmd = nullptr;
     _libHandler = dlopen(pluginPath.c_str(), RTLD_LAZY);
     if (!_libHandler) {
-        cerr << "!!! Brak biblioteki: " << pluginPath << endl;
+        std::cerr << "!!! Brak biblioteki: " << pluginPath << std::endl;
         return false;
     }
     pFunCreateCmd = dlsym(_libHandler, "CreateCmd");
     if (!pFunCreateCmd) {
-        cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+        std::cerr << "!!! Nie znaleziono funkcji CreateCmd" << std::endl;
         return false;
     }
     pCreateCmd = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunCreateCmd);

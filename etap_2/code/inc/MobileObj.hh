@@ -66,7 +66,50 @@
         */
        std::string  _Name;
 
+       /*!
+        * \brief Wektor przesunięcia obiektu.
+        *
+        * Przesunięcie obiektu, jego wartością są trzy współrzędne: x, y, z.
+        * Domyślnie (0,0,0), zapisane przy użyciu klasy Vector3D.
+        */
+       Vector3D _Shift;
+       /*!
+        * \brief Wartość skali obiektu.
+        *
+        * Zawiera współczynniki skali względem poszczególnych osi. Wartości
+        * nie mogą być ujemne.
+        */
+       Vector3D _Scale;
+       
+       /*!
+        * \brief Kolor obiektu.
+        *
+        * Domyślnie (128, 128, 128) w skali 8-bitowej pomiędzy 0-255.
+        */
+       unsigned int _Color[3];
+
      public:
+       MobileObj(const std::string &name, Vector3D position, Vector3D shift,
+               Vector3D scale, Vector3D rotation, unsigned int color[3]) {
+           // name
+           SetName(name.c_str());
+
+           // position
+           SetPosition_m(position);
+
+           // shift
+           SetShift(shift);
+
+           // scale
+           SetScale(scale);
+
+           // rotation
+           SetAng_Roll_deg(rotation[0]);
+           SetAng_Pitch_deg(rotation[1]);
+           SetAng_Yaw_deg(rotation[2]);
+
+           SetColor(color);
+       }
       /*!
        * \brief Udostępia wartość kąta \e roll.
        *
@@ -148,6 +191,32 @@
 	* Udostępnia nazwę obiektu w trybie tylko do odczytu.
         */
        const std::string & GetName() const { return _Name; }
+
+
+
+      /*!
+       * \brief Zmienia współrzędne przesunięcia obiektu.
+       *
+       * Zmienia współrzędne wektora, który definiuje przesunięcie obiektu.
+       * \param[in] rPos_m - współrzędne przesunięcia, przyjmuje się,
+       *                     że są one wyrażone w metrach.
+       */
+       void SetShift(const Vector3D &rShift) { _Shift = rShift; }
+
+      /*!
+       * \brief Zmienia parametr 'S' -- Skalę obiektu
+       *
+       * Zmienia współczynniki skali poszczególnych osi
+       * \param[in] rPos_m - wektor skali obiektu
+       */
+       void SetScale(const Vector3D &rScale) { _Scale = rScale; }
+
+       void SetColor(const unsigned int color[3]) {
+           for (auto i = 0; i < 3; i++) {
+               color[i] > 255 ? _Color[i] = 255 : _Color[i]=color[i];
+           }
+       }
+
     };
 
 

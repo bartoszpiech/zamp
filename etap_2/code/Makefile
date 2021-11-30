@@ -1,15 +1,12 @@
-CPPFLAGS=-Wall -pedantic -std=c++17 -iquote inc
-LDFLAGS=-Wall
+CPPFLAGS=-Wall -pedantic -std=c++17 -iquote inc -ldl -lxerces-c
 BIN=bin
-OBJ=obj
-OBJS=$(OBJ)/main.o $(OBJ)/xmlinterp.o
 PROGNAME=interp
+SRCS=src/main.cpp inc/Interp4Command.hh inc/LibInterface.hh \
+	src/LibInterface.cpp inc/xmlinterp.hh src/xmlinterp.cpp \
+	inc/Configuration.hh src/Configuration.cpp
 
-__start__: obj bin __lines_for_space__ $(BIN)/$(PROGNAME) __plugin__
-	export LD_LIBRARY_PATH="./libs"; ./$(BIN)/$(PROGNAME) | less
-
-obj:
-	mkdir obj
+__start__: bin __lines_for_space__ $(BIN)/$(PROGNAME) __plugin__
+	export LD_LIBRARY_PATH="./libs"; ./$(BIN)/$(PROGNAME)
 
 bin:
 	mkdir bin
@@ -25,18 +22,12 @@ __lines_for_space__:
 __plugin__:
 	cd plugin; make
 
-obj/xmlinterp.o: src/xmlinterp.cpp inc/xmlinterp.hh inc/Configuration.hh
-	g++ -c ${CPPFLAGS} -o obj/xmlinterp.o src/xmlinterp.cpp
-
-obj/main.o: src/main.cpp inc/Interp4Command.hh inc/LibInterface.hh inc/xmlinterp.hh inc/Configuration.hh inc/xmlinterp.hh
-	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
-
 # main function
-$(BIN)/$(PROGNAME): $(OBJS)
-	g++ ${LDFLAGS} -o $@ $^ -ldl -lxerces-c
+$(BIN)/$(PROGNAME): $(SRCS)
+	g++ -o $@ $^ $(CPPFLAGS)
 
 clean:
-	rm -f obj/* bin/*
+	rm -f bin/*
 
 clean_plugin:
 	cd plugin; make clean
