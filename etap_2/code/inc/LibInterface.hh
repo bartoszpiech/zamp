@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <dlfcn.h>
 
 #include "Interp4Command.hh"
 
@@ -47,23 +48,6 @@ public:
    /*!
     * \brief Metoda ładująca bibliotekę.
     */
-	bool init(std::string pluginPath) {
-		void *pFunCreateCmd = nullptr;
-		_libHandler = dlopen(pluginPath.c_str(), RTLD_LAZY);
-		if (!_libHandler) {
-			cerr << "!!! Brak biblioteki: " << pluginPath << endl;
-			return false;
-		}
-		pFunCreateCmd = dlsym(_libHandler, "CreateCmd");
-		if (!pFunCreateCmd) {
-			cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
-			return false;
-		}
-		pCreateCmd = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunCreateCmd);
-		auto pCmd = pCreateCmd();
-		cmdName = pCmd->GetCmdName();
-		delete pCmd; // memleak
-		return true;
-	}
+	bool init(const std::string &pluginPath);
 };
 #endif

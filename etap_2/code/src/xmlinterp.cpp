@@ -5,18 +5,17 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "Configuration.hh"
 
 
 using namespace std;
 
 
 /*!
- * Konstruktor klasy. Tutaj należy zainicjalizować wszystkie
- * dodatkowe pola.
+ * Konstruktor klasy. Zainicjalizowano referencję na obiekt klasy
+ * Configuration.
  */
-XMLInterp4Config::XMLInterp4Config(Configuration &rConfig)
-{
-}
+XMLInterp4Config::XMLInterp4Config(Configuration &rConfig) : _rConfig(rConfig) {}
 
 
 /*!
@@ -65,7 +64,7 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes  &rAttrs)
 
  cout << "  Nazwa biblioteki: " << sLibName << endl;
 
- // Tu trzeba wpisać własny kod ...
+ _rConfig.addLibrary(sLibName);
 
  xercesc::XMLString::release(&sParamName);
  xercesc::XMLString::release(&sLibName);
@@ -256,9 +255,6 @@ void XMLInterp4Config::endElement(  const   XMLCh* const    pURI,
    xercesc::XMLString::release(&sElemName);
 }
 
-
-
-
 /*!
  * Metoda wywoływana jest, gdy napotkany zostanie błąd fatalny,
  * np.
@@ -295,12 +291,15 @@ void XMLInterp4Config::fatalError(const xercesc::SAXParseException&  rException)
  */
 void XMLInterp4Config::error(const xercesc::SAXParseException&  rException)
 {
-  cerr << "Blad ..." << endl;
-
-  /*
-   * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
-   * jest tylko "atrapą".
-   */
+   char* sMessage = xercesc::XMLString::transcode(rException.getMessage());
+   char* sSystemId = xercesc::XMLString::transcode(rException.getSystemId());
+  cerr << "!!! Blad, wystapil w pliku " << sSystemId << ", linia["
+      << rException.getLineNumber() << ","
+      << rException.getColumnNumber() << "]."
+      << "!!! Informacja : " << sMessage
+      << endl;
+    xercesc::XMLString::release(&sMessage);
+    xercesc::XMLString::release(&sSystemId);
 }
 
 
@@ -312,10 +311,11 @@ void XMLInterp4Config::error(const xercesc::SAXParseException&  rException)
  */
 void XMLInterp4Config::warning(const xercesc::SAXParseException&  rException)  
 {
-  cerr << "Ostrzezenie ..." << endl;
-
-  /*
-   * Tutaj należy wstawić odpowiedni kod. Tekst wyświetlany powyżej
-   * jest tylko "atrapą".
-   */
+   char* sMessage = xercesc::XMLString::transcode(rException.getMessage());
+   char* sSystemId = xercesc::XMLString::transcode(rException.getSystemId());
+    cerr << "! Ostrzezenie, wystapilo w [" << rException.getLineNumber() << ","
+        << rException.getColumnNumber() << "]." << endl;
+    cerr << "! Informacja: " << sMessage << endl;
+    xercesc::XMLString::release(&sMessage);
+    xercesc::XMLString::release(&sSystemId);
 }

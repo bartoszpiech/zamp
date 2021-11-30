@@ -25,10 +25,10 @@ __lines_for_space__:
 __plugin__:
 	cd plugin; make
 
-obj/xmlinterp.o: src/xmlinterp.cpp inc/xmlinterp.hh
+obj/xmlinterp.o: src/xmlinterp.cpp inc/xmlinterp.hh inc/Configuration.hh
 	g++ -c ${CPPFLAGS} -o obj/xmlinterp.o src/xmlinterp.cpp
 
-obj/main.o: src/main.cpp inc/Interp4Command.hh inc/LibInterface.hh inc/xmlinterp.hh
+obj/main.o: src/main.cpp inc/Interp4Command.hh inc/LibInterface.hh inc/xmlinterp.hh inc/Configuration.hh inc/xmlinterp.hh
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
 
 # main function

@@ -38,7 +38,7 @@ public:
    /*!
     * \brief Metoda AddInterface, pozwala dodać bibliotekę do mapy
     */
-	bool addInterface(std::string interfacePath) {
+	bool addInterface(const std::string &interfacePath) {
 		auto pInterface = std::make_shared<LibInterface>();
 		if (!(pInterface->init(interfacePath))) {
 			std::cerr << "!!! Dodanie interfejsu ze sciezki " << interfacePath

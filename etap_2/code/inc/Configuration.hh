@@ -13,12 +13,10 @@ private:
 	std::map<std::string, std::shared_ptr<MobileObj>> MobileObjects;
 	std::vector<std::string> Libraries; 
 public:
-	bool addMobileObject(std::string objName, std::shared_ptr<MobileObj> pMobObj);
-	bool addLibrary(std::string library);
-
-public:
-
+    std::map<std::string, std::shared_ptr<MobileObj>> getMobileObjects();
+	std::vector<std::string> getLibraries();
+	void addMobileObject(std::string objName, std::shared_ptr<MobileObj> pMobObj);
+	void addLibrary(std::string library);
 };
-
 
 #endif

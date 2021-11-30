@@ -11,6 +11,8 @@ using namespace std;
 #include "Set4LibInterfaces.hh"
 #include "Vector3D.hh"
 
+#include "Scene.hh"
+
 // nowe headery xmlinterp
 #include <xercesc/sax2/SAX2XMLReader.hpp>
 #include <xercesc/sax2/XMLReaderFactory.hpp>
@@ -20,28 +22,9 @@ using namespace std;
 
 using namespace xercesc;
 bool ReadFile(const char* sFileName, Configuration &rConfig);
+bool ExecPreprocessor(const char *fileName, istringstream &iStrm4Cmds);
 
 #define LINE_SIZE 500
-
-/*
- * \brief Funkcja wykonująca czynności preprocesora (usuwa komentarze, zamienia
- * #define na konkretne wartości).
- */
-bool ExecPreprocessor(const char *fileName, istringstream &iStrm4Cmds) {
-	string cmd4Preproc = "cpp -P ";
-	char line[LINE_SIZE];
-	ostringstream oTmpStrm;
-	cmd4Preproc += fileName;
-	FILE *pProc = popen(cmd4Preproc.c_str(), "r");
-	if (!pProc) {
-		return false;
-	}
-	while (fgets(line, LINE_SIZE, pProc)) {
-		oTmpStrm << line;
-	}
-	iStrm4Cmds.str(oTmpStrm.str());
-	return pclose(pProc) == 0;
-}
 
 int main(int argc, char **argv) {
 	// sprawdzenie ilosci argumentow przy wywolaniu programu
@@ -203,5 +186,25 @@ bool ReadFile(const char* sFileName, Configuration &rConfig)
    delete pParser;
    delete pHandler;
    return true;
+}
+
+/*
+ * \brief Funkcja wykonująca czynności preprocesora (usuwa komentarze, zamienia
+ * #define na konkretne wartości).
+ */
+bool ExecPreprocessor(const char *fileName, istringstream &iStrm4Cmds) {
+	string cmd4Preproc = "cpp -P ";
+	char line[LINE_SIZE];
+	ostringstream oTmpStrm;
+	cmd4Preproc += fileName;
+	FILE *pProc = popen(cmd4Preproc.c_str(), "r");
+	if (!pProc) {
+		return false;
+	}
+	while (fgets(line, LINE_SIZE, pProc)) {
+		oTmpStrm << line;
+	}
+	iStrm4Cmds.str(oTmpStrm.str());
+	return pclose(pProc) == 0;
 }
 
