@@ -13,6 +13,8 @@ using namespace std;
 
 #include "Scene.hh"
 
+#include "Sender.hh"
+
 // nowe headery xmlinterp
 #include <xercesc/sax2/SAX2XMLReader.hpp>
 #include <xercesc/sax2/XMLReaderFactory.hpp>
@@ -23,89 +25,75 @@ using namespace std;
 using namespace xercesc;
 bool ReadFile(const char* sFileName, Configuration &rConfig);
 bool ExecPreprocessor(const char *fileName, istringstream &iStrm4Cmds);
+void SendScene(Scene &scene, Sender &sender);
 
 #define LINE_SIZE 500
 
+void usage(const char* progName) {
+    cerr << "Użycie: " << progName << " plik_komend.cmd" << endl;
+}
+
 int main(int argc, char **argv) {
 	// sprawdzenie ilosci argumentow przy wywolaniu programu
-	if (argc == 2) {
-		istringstream stream;
-		if (!ExecPreprocessor(argv[1],stream)) {
-			cerr << "!!! Wywolanie preprocesora sie nie powiodlo" << endl;
-			return 1;
-		}
-		//cout << stream.str();
-		Set4LibInterfaces interfaces;
-		interfaces.addInterface("libs/libInterp4Rotate.so");
-		interfaces.addInterface("libs/libInterp4Pause.so");
-		interfaces.addInterface("libs/libInterp4Set.so");
-		interfaces.addInterface("libs/libInterp4Move.so");
+	if (argc != 2) {
+        usage(argv[0]);
+        return 1;
+    }
 
-		std::string cmd_name;
-		while (stream >> cmd_name) {
-			if (interfaces.map.find(cmd_name) == interfaces.map.end()) {
-				cerr << "Nie znaleziono komendy: " << cmd_name << endl;
-				break;
-			}
-			Interp4Command *pcmd = interfaces.map[cmd_name]->pCreateCmd();
-			if (!pcmd->ReadParams(stream)) {
-				cerr << "Wczytywanie parametrow nie powiodlo sie" << endl;
-			}
-			pcmd->PrintCmd();
-		}
-		Configuration   Config;
-		if (!ReadFile("config/config.xml",Config)) return 1;
-	}
+    // wczytanie xml
+    Configuration Config;
+    if (!ReadFile("config/config.xml",Config)) {
+        cerr << "!!! Wczytanie pliku konfiguracyjnego sie nie powiodlo" << endl;
+        return 1;
+    }
 
-	/*
-	Vector3D vec;
-	istringstream txtStream("20 2 4");
-	txtStream >> vec;
-	cout << vec;
-	*/
+    // wczytanie bibliotek wspoldzielonych
+    Set4LibInterfaces interfaces;
+    auto xmlLoadedLibs = Config.getLibraries();
+    for (auto i : xmlLoadedLibs) {
+        interfaces.addInterface(i);
+    }
 
-	/* TEST
-	Set4LibInterfaces interfaces;
-	interfaces.addInterface("libInterp4Set.so");
-	interfaces.addInterface("libInterp4Move.so");
-	interfaces.addInterface("libInterp4Rotate.so");
-	interfaces.addInterface("libInterp4Pause.so");
-	Interp4Command *pCmd_Move = interfaces.map["Move"]->pCreateCmd();
-	Interp4Command *pCmd_Set = interfaces.map["Set"]->pCreateCmd();
-	Interp4Command *pCmd_Rotate = interfaces.map["Rotate"]->pCreateCmd();
-	Interp4Command *pCmd_Pause = interfaces.map["Pause"]->pCreateCmd();
+    // wczytanie obiektow mobilnych z xml do sceny
+    Scene scene;
+    auto xmlLoadedMobileObjs = Config.getMobileObjects();
+    for (auto i : xmlLoadedMobileObjs) {
+        scene.AddMobileObj(i.first, i.second);
+    }
 
-	cout << endl;
-	cout << pCmd_Move->GetCmdName() << endl;
-	cout << endl;
-	cout << pCmd_Set->GetCmdName() << endl;
-	cout << endl;
-	cout << pCmd_Rotate->GetCmdName() << endl;
-	cout << endl;
-	cout << pCmd_Pause->GetCmdName() << endl;
-	cout << endl;
-	pCmd_Move->PrintSyntax();
-	cout << endl;
-	pCmd_Move->PrintCmd();
-	cout << endl;
-	pCmd_Set->PrintSyntax();
-	cout << endl;
-	pCmd_Set->PrintCmd();
-	cout << endl;
-	pCmd_Rotate->PrintSyntax();
-	cout << endl;
-	pCmd_Rotate->PrintCmd();
-	cout << endl;
-	pCmd_Pause->PrintSyntax();
-	cout << endl;
-	pCmd_Pause->PrintCmd();
-	cout << endl;
+    // wyslanie sceny do serwera graficznego
 
-	delete pCmd_Move;
-	delete pCmd_Set;
-	delete pCmd_Rotate;
-	delete pCmd_Pause;
-	*/
+    int Socket4Sending;
+    if (!OpenConnection(Socket4Sending)) return 1;
+    Sender sender(Socket4Sending,&scene);
+    SendScene(scene, sender);
+    /*
+    for (auto i : scene.getMobileObjects()) {
+        auto msg = i.second->Message();
+        cout << "msg: " << msg << endl;
+    }
+    */
+
+
+
+    istringstream stream;
+    if (!ExecPreprocessor(argv[1],stream)) {
+        cerr << "!!! Wywolanie preprocesora sie nie powiodlo" << endl;
+        return 1;
+    }
+
+    std::string cmd_name;
+    while (stream >> cmd_name) {
+        if (interfaces.map.find(cmd_name) == interfaces.map.end()) {
+            cerr << "Nie znaleziono komendy: " << cmd_name << endl;
+            break;
+        }
+        Interp4Command *pcmd = interfaces.map[cmd_name]->pCreateCmd();
+        if (!pcmd->ReadParams(stream)) {
+            cerr << "Wczytywanie parametrow nie powiodlo sie" << endl;
+        }
+        pcmd->PrintCmd();
+    }
 }
 
 /*!
@@ -208,3 +196,11 @@ bool ExecPreprocessor(const char *fileName, istringstream &iStrm4Cmds) {
 	return pclose(pProc) == 0;
 }
 
+void SendScene(Scene &scene, Sender &sender) {
+    for (auto i : scene.GetMobileObjects()) {
+        std::string msg = "AddObj ";
+        msg += i.second->Message();
+        cout << "MSG: " << msg << endl;
+        sender.Send(msg.c_str());
+    }
+}

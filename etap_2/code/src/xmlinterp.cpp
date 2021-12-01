@@ -140,7 +140,7 @@ istringstream   IStrm_position, IStrm_color;
 
  std::string name;
  Vector3D shift, scale, rotation, position;
- unsigned int color[3];
+    geom::Vector<unsigned int,3>  color;
 
  IStrm_name.str(sValue_Name);
  IStrm_name >> name;
@@ -189,12 +189,12 @@ if (IStrm_position.fail()) {
  }
 
  IStrm_color.str(sValue_RGB);
- IStrm_color >> color[0] >> color[1] >> color[2];
+ IStrm_color >> color;
 if (IStrm_color.fail()) {
     cerr << " Blad podczas czytania RGB!!!" << endl;
  } else {
      cout << " Czytanie wartosci RGB OK!!!" << endl;
-     cout << "     " << color[0] << " " << color[1] << " " << color[2] << endl;
+     cout << "     " << color << endl;
  }
 auto mobileObj = std::make_shared<MobileObj>(name, position, shift, scale,
         rotation, color);

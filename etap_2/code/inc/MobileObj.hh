@@ -3,6 +3,7 @@
 
 
 #include <string>
+#include <sstream>
 #include "Vector3D.hh"
 
 
@@ -86,11 +87,12 @@
         *
         * Domyślnie (128, 128, 128) w skali 8-bitowej pomiędzy 0-255.
         */
-       unsigned int _Color[3];
+
+        geom::Vector<unsigned int,3>  _Color;
 
      public:
        MobileObj(const std::string &name, Vector3D position, Vector3D shift,
-               Vector3D scale, Vector3D rotation, unsigned int color[3]) {
+               Vector3D scale, Vector3D rotation, geom::Vector<unsigned int, 3> color) {
            // name
            SetName(name.c_str());
 
@@ -211,10 +213,29 @@
        */
        void SetScale(const Vector3D &rScale) { _Scale = rScale; }
 
-       void SetColor(const unsigned int color[3]) {
+       void SetColor(const geom::Vector<unsigned int,3> &color) {
+           _Color = color;
            for (auto i = 0; i < 3; i++) {
-               color[i] > 255 ? _Color[i] = 255 : _Color[i]=color[i];
+               _Color[i] > 255 ? _Color[i] = 255 : _Color[i] = _Color[i];
            }
+       }
+
+       /*
+    <xs:attribute name="Name" type="xs:string"/>
+    <xs:attribute name="Shift" type="xs:string" default="0 0 0"/>
+    <xs:attribute name="Scale" type="xs:string" default="1 1 1"/>
+    <xs:attribute name="RotXYZ_deg" type="xs:string" default="0 0 0"/>
+    <xs:attribute name="Trans_m" type="xs:string" default="0 0 0"/>
+    <xs:attribute name="RGB" type="xs:string" default="128 128 128"/>
+    */
+       std::string Message() {
+           std::stringstream OStrm;
+           Vector3D rotation;
+           rotation[0] = _Ang_Roll_deg; 
+           rotation[1] = _Ang_Pitch_deg;
+           rotation[2] = _Ang_Yaw_deg;
+           OStrm << "Name=" << _Name << " Shift=" << _Shift << " Scale=" << _Scale << " RotXYZ_deg=" << rotation << " Trans_m=" << _Position_m << " RGB=" << _Color << "\n";
+           return OStrm.str();
        }
 
     };

@@ -294,7 +294,8 @@ bool OpenConnection(int &rSocket)
   bzero((char *)&DaneAdSerw,sizeof(DaneAdSerw));
 
   DaneAdSerw.sin_family = AF_INET;
-  DaneAdSerw.sin_addr.s_addr = inet_addr("127.0.0.1");
+  //DaneAdSerw.sin_addr.s_addr = inet_addr("127.0.0.1");
+  DaneAdSerw.sin_addr.s_addr = inet_addr(IP);
   DaneAdSerw.sin_port = htons(PORT);
 
 

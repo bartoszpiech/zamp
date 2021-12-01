@@ -8,7 +8,8 @@ std::shared_ptr<MobileObj> Scene::findMobileObj(const char *sObjName) {
     }
     return nullptr;
 }
-std::shared_ptr<MobileObj> Scene::findMobileObj(const std::string &rObjName);
+
+std::shared_ptr<MobileObj> Scene::findMobileObj(const std::string &rObjName) {
     auto search = MobileObjects.find(rObjName);
     if (search != MobileObjects.end()) {
         return search->second;
@@ -16,10 +17,11 @@ std::shared_ptr<MobileObj> Scene::findMobileObj(const std::string &rObjName);
     return nullptr;
 }
 
-void AddMobileObj(const std::string &rObjName, std::shared_ptr<MobileObj> pMobObj) {
+void Scene::AddMobileObj(const std::string &rObjName, std::shared_ptr<MobileObj> pMobObj) {
     MobileObjects[rObjName] = pMobObj;
 }
 
-void AddMobileObj(const char *sObjName, std::shared_ptr<MobileObj> pMobObj) {
-    MobileObjects[cstr(sObjName)] = pMobObj;
+void Scene::AddMobileObj(const char *sObjName, std::shared_ptr<MobileObj> pMobObj) {
+    std::string objName(sObjName);
+    MobileObjects[objName] = pMobObj;
 }

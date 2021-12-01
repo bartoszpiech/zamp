@@ -3,10 +3,12 @@ BIN=bin
 PROGNAME=interp
 SRCS=src/main.cpp inc/Interp4Command.hh inc/LibInterface.hh \
 	src/LibInterface.cpp inc/xmlinterp.hh src/xmlinterp.cpp \
-	inc/Configuration.hh src/Configuration.cpp
+	inc/Configuration.hh src/Configuration.cpp inc/Scene.hh \
+	src/Scene.cpp inc/Sender.hh src/Sender.cpp inc/AccessControl.hh
+CMDPROG=plik.cmd
 
 __start__: bin __lines_for_space__ $(BIN)/$(PROGNAME) __plugin__
-	export LD_LIBRARY_PATH="./libs"; ./$(BIN)/$(PROGNAME)
+	export LD_LIBRARY_PATH="./libs"; ./$(BIN)/$(PROGNAME) $(CMDPROG)
 
 bin:
 	mkdir bin
