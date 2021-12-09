@@ -33,6 +33,13 @@ void usage(const char* progName) {
     cerr << "Użycie: " << progName << " plik_komend.cmd" << endl;
 }
 
+/*
+int main() {
+    LibInterface libinterface;
+    libinterface.init("libInterp4Pause.so");
+}
+*/
+
 int main(int argc, char **argv) {
 	// sprawdzenie ilosci argumentow przy wywolaniu programu
 	if (argc != 2) {
@@ -74,6 +81,7 @@ int main(int argc, char **argv) {
     }
     */
 
+    sender.Watching_and_Sending();
 
 
     istringstream stream;
@@ -82,18 +90,40 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    std::string cmd_name;
+    std::string cmd_name, obj_name;
+    std::vector<std::thread> threads;
     while (stream >> cmd_name) {
-        if (interfaces.map.find(cmd_name) == interfaces.map.end()) {
-            cerr << "Nie znaleziono komendy: " << cmd_name << endl;
-            break;
+        if (cmd_name == "Begin_Parallel_Actions") {
+            cout << "Begin Parallel Actions" << endl;
+        } else {
+            cerr << "!!! Nie znaleziono Begin Parallel Actions" << endl;
+            return 1;
         }
-        Interp4Command *pcmd = interfaces.map[cmd_name]->pCreateCmd();
-        if (!pcmd->ReadParams(stream)) {
-            cerr << "Wczytywanie parametrow nie powiodlo sie" << endl;
+        while (true) {
+            stream >> cmd_name;
+            if (cmd_name == "End_Parallel_Actions") {
+                cout << "End Parallel Actions" << endl;
+                for (auto &i : threads) {
+                    i.join();
+                }
+                break;
+            }
+            if (interfaces.map.find(cmd_name) == interfaces.map.end()) {
+                cerr << "!!! Nie znaleziono komendy: " << cmd_name << endl;
+                break;
+            }
+            Interp4Command *pcmd = interfaces.map[cmd_name]->pCreateCmd();
+            if (!pcmd->ReadParams(stream)) {
+                cerr << "!!! Wczytywanie parametrow nie powiodlo sie" << endl;
+            }
         }
-        pcmd->PrintCmd();
     }
+        /*
+        if (cmd_name != "Pause") {
+            obj_name = pcmd->GetObjName();
+            if (scene->findMobileObj(
+        pcmd->PrintCmd();
+        */
 }
 
 /*!
@@ -204,3 +234,17 @@ void SendScene(Scene &scene, Sender &sender) {
         sender.Send(msg.c_str());
     }
 }
+
+/*
+    while (stream >> cmd_name) {
+        if (interfaces.map.find(cmd_name) == interfaces.map.end()) {
+            cerr << "Nie znaleziono komendy: " << cmd_name << endl;
+            break;
+        }
+        Interp4Command *pcmd = interfaces.map[cmd_name]->pCreateCmd();
+        if (!pcmd->ReadParams(stream)) {
+            cerr << "Wczytywanie parametrow nie powiodlo sie" << endl;
+        }
+        pcmd->PrintCmd();
+    }
+    */

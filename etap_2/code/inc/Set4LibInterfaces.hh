@@ -3,6 +3,7 @@
 
 #include <map>
 #include <memory>
+#include <string>
 
 #include "LibInterface.hh"
 
@@ -25,7 +26,7 @@ public:
     * \brief Mapa z STL, łączy nazwę polecenia, np. Set, oraz inteligentny
 	* wskaźnik na interfejs biblioteki.
     */
-	std::map<string, std::shared_ptr<LibInterface>> map;
+	std::map<std::string, std::shared_ptr<LibInterface>> map;
 public:
    /*!
     * \brief Konstruktor domyślny klasy Set4LibInterfaces
@@ -38,15 +39,6 @@ public:
    /*!
     * \brief Metoda AddInterface, pozwala dodać bibliotekę do mapy
     */
-	bool addInterface(const std::string &interfacePath) {
-		auto pInterface = std::make_shared<LibInterface>();
-		if (!(pInterface->init(interfacePath))) {
-			std::cerr << "!!! Dodanie interfejsu ze sciezki " << interfacePath
-				<< " nie powiodlo sie" << std::endl;
-			return false;
-		}
-		map[pInterface->cmdName] = pInterface;
-		return true;
-	}
+	bool addInterface(std::string &interfacePath);
 };
 #endif

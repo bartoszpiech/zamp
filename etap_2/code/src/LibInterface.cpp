@@ -1,10 +1,10 @@
 #include "LibInterface.hh"
 
 
-bool LibInterface::init(const std::string &pluginPath) {
-    void *pFunCreateCmd = nullptr;
+bool LibInterface::init(std::string &pluginPath) {
     _libHandler = dlopen(pluginPath.c_str(), RTLD_LAZY);
-    if (!_libHandler) {
+    void *pFunCreateCmd = nullptr;
+    if (_libHandler == NULL) {
         std::cerr << "!!! Brak biblioteki: " << pluginPath << std::endl;
         return false;
     }
@@ -16,6 +16,6 @@ bool LibInterface::init(const std::string &pluginPath) {
     pCreateCmd = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunCreateCmd);
     auto pCmd = pCreateCmd();
     cmdName = pCmd->GetCmdName();
-    delete pCmd; // memleak protection
+    //delete pCmd; // memleak protection
     return true;
 }

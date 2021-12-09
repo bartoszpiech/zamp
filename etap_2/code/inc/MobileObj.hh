@@ -160,7 +160,7 @@
        * w trybie tylko do odczytu.
        * Domyślnie przyjmuje się, że jest to geometryczny środek bryły.
        */
-       const Vector3D & GetPositoin_m() const { return _Position_m; }
+       const Vector3D & GetPosition_m() const { return _Position_m; }
       /*!
        * \brief Udostępnia współrzędne położenia obiektu w trybie modyfikacji.
        *

@@ -18,21 +18,16 @@ int Sender::Send(const char *sMesg)
 }
 
 void Sender::Watching_and_Sending() {
-    /*
     while (ShouldCountinueLooping()) {
         if (!_pScn->IsChanged())  { usleep(10000); continue; }
         _pScn->LockAccess();
-        //------- Przeglądanie tej kolekcji to uproszczony przykład
-        for (const GeomObject &rObj : _pScn->_Container4Objects) {
-                                     // Ta instrukcja to tylko uproszczony przykład
-            cout << rObj.GetStateDesc();
-             Send(_Socket,rObj.GetStateDesc()); // Tu musi zostać wywołanie odpowiedniej
-                                           // metody/funkcji gerującej polecenia dla serwera.
+        for (const auto &rObj : _pScn->GetMobileObjects()) {
+            cout << rObj.second->Message();
+             Send(rObj.second->Message().c_str());
         }
         _pScn->CancelChange();
         _pScn->UnlockAccess();
     }
-    */
 }
 
 void Fun_CommunicationThread(Sender  *pSender) {

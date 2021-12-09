@@ -37,17 +37,24 @@ public:
     * \brief Konstruktor klasy LibInterface tworzący instancję z domyślnymi
 	* wartościami.
     */
+    //LibInterface();
+    /*
 	LibInterface(): _libHandler(nullptr), cmdName("unnamed cmd"), pCreateCmd(nullptr)
 	{}
+    */
    /*!
     * \brief Destruktor klasy, zamyka uchwyt do dynamicznej biblioteki.
     */
 	~LibInterface() {
-		dlclose(_libHandler);
+        /*
+        if (_libHandler != nullptr) {
+            dlclose(_libHandler);
+        }
+        */
 	}
    /*!
     * \brief Metoda ładująca bibliotekę.
     */
-	bool init(const std::string &pluginPath);
+	bool init(std::string &pluginPath);
 };
 #endif

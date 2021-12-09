@@ -17,7 +17,7 @@
  * 127.0.0.1 -- domyślny adres komputera na którym działa klient,
  * 156.17.9.7 -- adres Panaminta
  */
-#define IP "156.17.9.7"
-//#define IP "127.0.0.1"
+//#define IP "156.17.9.7"
+#define IP "127.0.0.1"
 
 #endif

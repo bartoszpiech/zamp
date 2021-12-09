@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include "MobileObj.hh"
+#include "AccessControl.hh"
+#include "Sender.hh"
 
 /*!
  * \file
@@ -32,14 +34,18 @@
     * \brief Wyświetla składnię polecenia.
     */
    virtual void PrintSyntax() const = 0;
+	/*!
+	* \brief Zwaraca nazwę obiektu
+	*/
+	virtual std::string GetObjName() const;
    /*!
-    * \brief Wyświetla nazwę polecenia.
+    * \brief Zwraca nazwę polecenia.
     */
    virtual const char* GetCmdName() const = 0;
    /*!
     * \brief Wykonuje polecenie oraz wizualizuje jego realizację.
     */
-   virtual bool ExecCmd( MobileObj *pMobObj, int Socket ) const = 0;
+   virtual bool ExecCmd( MobileObj *pMobObj, AccessControl *pAccCtrl) const = 0;
    /*!
     * \brief Czyta wartości parametrów danego polecenia.
     */
